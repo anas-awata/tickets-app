@@ -42,22 +42,21 @@ function CreateTicketsForm() {
       >
         <h2>Services</h2>
         <table id="services">
-          <tr>
-            <th>Service</th>
-            <th>Price</th>
-          </tr>
-          {isLoading && (
+          <thead>
             <tr>
-              <Spin size="large" />
+              <th>Service</th>
+              <th>Price</th>
             </tr>
-          )}
-          {isError && <tr>{error}</tr>}
-          {data?.data[0].map((service) => (
-            <tr key={service.id}>
-              <td>{service.title}</td>
-              <td>{service.price}$</td>
-            </tr>
-          ))}
+          </thead>
+          <tbody>
+            {isError && <tr>{error}</tr>}
+            {data?.data[0].map((service) => (
+              <tr key={service.id}>
+                <td>{service.title}</td>
+                <td>{service.price}$</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
 
         <Form.Item style={{ marginTop: 30 }} label="Select Service">
