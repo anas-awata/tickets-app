@@ -10,7 +10,6 @@ function CreateReportForm({ id }) {
   //mutation to add Report
   const { mutate, isLoading: loading } = useMutation(addReport, {
     onSuccess: (response) => {
-      console.log("Success:", response);
       // Invalidate and refetch
       queryClient.invalidateQueries(["view-ticket", id]);
     },

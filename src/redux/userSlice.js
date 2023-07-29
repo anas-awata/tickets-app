@@ -9,16 +9,13 @@ const userSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       state.user = action.payload;
-      console.log(action.payload);
     },
     addToken: (state, action) => {
       state.token = action.payload;
-      console.log(action.payload);
     },
     removeUser: (state) => {
       state.user = [];
       state.token = "";
-      console.log("loggedout", state.user, state.token);
     },
   },
 });

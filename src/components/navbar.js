@@ -23,7 +23,6 @@ function Navbar() {
     onSuccess: (response) => {
       // Invalidate and refetch
       queryClient.invalidateQueries("login");
-      console.log("Success:", response);
       if (response.data.message == "Logged out successfully") {
         //redux remove token from state
         dispatch(removeUser());

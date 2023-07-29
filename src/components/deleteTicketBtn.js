@@ -9,7 +9,6 @@ function DeleteTicketBtn({ id }) {
   //mutation to delete ticket
   const { mutate, isLoading, isError, error } = useMutation(deleteTicket, {
     onSuccess: (response) => {
-      console.log("Success:", response);
       // Invalidate and refetch
       queryClient.invalidateQueries("getTickets");
     },
@@ -28,7 +27,7 @@ function DeleteTicketBtn({ id }) {
       style={{ width: 50 }}
       loading={isLoading}
     >
-      <DeleteFilled style={{ fontSize: "150%" }} />
+      <DeleteFilled className="success" style={{ fontSize: "150%" }} />
     </Button>
   );
 }

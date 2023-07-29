@@ -18,24 +18,22 @@ import CreateTicketsForm from "../components/createTicketsForm.js";
 
 function Home() {
   const token = useSelector((state) => state.token);
-  console.log(token);
 
   //get tickets data
   const { data, isLoading, isError, error } = useQuery(
     "getTickets",
     getTickets
   );
-  console.log(data?.data.data);
   return (
     <div>
-      <CreateTicketsForm />
+      {<CreateTicketsForm />}
       {isLoading && <Spin size="large" />}
       {isError && <h2>{error}</h2>}
       {!isError && (
         <Space
           align="center"
           size="middle"
-          style={{ display: "flex", padding: 100 }}
+          style={{ display: "flex", padding: 100, paddingTop: 10 }}
           wrap
         >
           {!isError &&

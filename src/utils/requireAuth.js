@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 function RequireAuth({ children }) {
   const token = useSelector((state) => state.token);
-  console.log("required", token);
   if (!token) {
     return <Navigate to="/login" />;
   }

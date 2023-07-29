@@ -6,6 +6,7 @@ import CreateReportForm from "../components/creatReportForm";
 import { useSelector } from "react-redux";
 import Report from "../components/report";
 import { Card, Spin } from "antd";
+import TicketInfo from "../components/ticketInfo";
 
 function TicketDetails() {
   //get id from url
@@ -17,43 +18,23 @@ function TicketDetails() {
     ["view-ticket", id],
     () => request({ url: `view-ticket/${id}` })
   );
-
-  console.log(data);
   return (
     <div>
-      <Card>
-        <table id="services">
-          <tr>
-            <th>Client</th>
-            <th>Ticket id</th>
-            <th>Service</th>
-            <th>Price</th>
-          </tr>
-          <tr>
-            <td>{data?.data[0].client.name}</td>
-            <td>{id}</td>
-            <td>{data?.data[0].service.title}</td>
-            <td>{data?.data[0].service.price}$</td>
-          </tr>
-
-          {isLoading && (
-            <tr>
-              <Spin size="large" />
-            </tr>
-          )}
-          {isError && <tr>{error}</tr>}
-        </table>
-
-        {
-          //only Admins can add reports
-          user_role == "1" && (
-            <>
-              <h2>Create Report</h2>
-              <CreateReportForm id={id} />
-            </>
-          )
-        }
-      </Card>
+      <TicketInfo
+        name={data?.data[0].client.name}
+        service={data?.data[0].service.title}
+        price={data?.data[0].service.price}
+        id={id}
+      />
+      {
+        //only Admins can add reports
+        user_role == "1" && (
+          <>
+            <h2>Create Report</h2>
+            <CreateReportForm id={id} />
+          </>
+        )
+      }
 
       {isLoading && <Spin size="large" />}
       {isError && <h2>{error}</h2>}

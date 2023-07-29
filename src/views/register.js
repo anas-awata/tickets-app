@@ -30,7 +30,6 @@ function Register() {
     onSuccess: (response) => {
       // Invalidate and refetch
       queryClient.invalidateQueries("register");
-      console.log("Success:", response);
       navigate("/login");
     },
   });

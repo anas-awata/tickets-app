@@ -23,12 +23,10 @@ function Login() {
     onSuccess: (response) => {
       // Invalidate and refetch
       queryClient.invalidateQueries("login");
-      console.log("Success:", response);
       if (response.data.message == "Operation successful") {
         //redux
         dispatch(addUser(response.data.user));
         dispatch(addToken(response.data.access_token));
-        console.log(myuser);
         navigate("/", { replace: true });
       }
     },

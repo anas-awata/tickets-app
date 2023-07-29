@@ -60,7 +60,7 @@ function CreateTicketsForm() {
           ))}
         </table>
 
-        <Form.Item label="Select Service">
+        <Form.Item style={{ marginTop: 30 }} label="Select Service">
           <Select
             name="service_id"
             defaultValue={1}

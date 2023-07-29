@@ -11,22 +11,23 @@ function Ticket({ id, title, price, status, client }) {
   const user_role = useSelector((state) => state.user.role_id);
   return (
     <Card
-      title={user_role == "1" ? `Client: ${client} #${id}` : `#${id}`}
+      title={`#${id}`}
       extra={user_role == "1" && <DeleteTicketBtn id={id} />}
       style={{
         minWidth: "300px",
-        transitionProperty: "transform",
-        transitionDuration: "0.3s",
-        transitionTimingFunction: "ease-in-out",
-        "&:hover": {
-          transform: "scale(1.07)",
-        },
         cursor: "pointer",
+        background: "#6992ff12",
+        border: "1px solid #d1d1d1",
+        borderRadius: "25px",
       }}
+      headStyle={{ textAlign: "left", paddingLeft: "25px", fontSize: "large" }}
       onClick={() => navigate(`ticket/${id}`)}
+      hoverable={true}
     >
-      <p>{title}</p>
-      <p>{price}</p>
+      {user_role == "1" && (
+        <p style={{ fontSize: "large" }}>{`Client: ${client}`}</p>
+      )}
+      <p style={{ fontSize: "large" }}>{title}</p>
       <Space align="center">
         {status == "pending" ? (
           <MinusCircleFilled style={{ color: "#e7e741", fontSize: "150%" }} />
