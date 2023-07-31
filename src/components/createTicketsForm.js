@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Row, Button, Card, Form, Select, Spin } from "antd";
+import { Typography, Row, Button, Card, Form, Select, Spin, Col } from "antd";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createTicket, viewServices } from "../api/axios";
 
@@ -28,84 +28,90 @@ function CreateTicketsForm() {
     console.log("Failed:", errorInfo);
   };
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: "10vh" }}
+    <Card
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
     >
-      <Card
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <h2>Services</h2>
-        <table id="services">
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isError && <tr>{error}</tr>}
-            {data?.data[0].map((service) => (
-              <tr key={service.id}>
-                <td>{service.title}</td>
-                <td>{service.price}$</td>
+      <Row justify="center" align="middle">
+        <Col span={24}>
+          <h1>Book a Service</h1>
+        </Col>
+        <Col span={24}>
+          <table id="services">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Price</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <Form.Item style={{ marginTop: 30 }} label="Select Service">
-          <Select
-            name="service_id"
-            defaultValue={1}
-            onChange={(value) => {
-              setMyService(value);
-            }}
-          >
-            {!isError &&
-              data?.data[0].map((service) => (
-                <Select.Option key={service.id} value={service.id}>
-                  {service.title}
-                </Select.Option>
+            </thead>
+            <tbody>
+              {isError && <tr>{error}</tr>}
+              {data?.data[0].map((service) => (
+                <tr key={service.id}>
+                  <td>{service.title}</td>
+                  <td>{service.price}$</td>
+                </tr>
               ))}
-          </Select>
-        </Form.Item>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            minWidth: 400,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 8,
+            </tbody>
+          </table>
+        </Col>
+        <Col span={24}>
+          <Form
+            name="basic"
+            style={{
+              minWidth: 400,
             }}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
           >
-            <Button type="primary" htmlType="submit" loading={loading}>
-              Add Ticket
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
-    </Row>
+            <Form.Item
+              style={{
+                marginTop: 30,
+              }}
+              wrapperCol={{
+                xs: { span: 6, offset: 0 },
+                md: {
+                  span: 14,
+                  offset: 2,
+                },
+              }}
+              labelCol={{ xs: { span: 2 }, md: { span: 6 } }}
+              label="Select Service"
+            >
+              <Select
+                name="service_id"
+                defaultValue={1}
+                onChange={(value) => {
+                  setMyService(value);
+                }}
+              >
+                {!isError &&
+                  data?.data[0].map((service) => (
+                    <Select.Option key={service.id} value={service.id}>
+                      {service.title}
+                    </Select.Option>
+                  ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                span: 24,
+              }}
+            >
+              <Button type="primary" htmlType="submit" loading={loading}>
+                Add Ticket
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
+    </Card>
   );
 }
 

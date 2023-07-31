@@ -7,6 +7,8 @@ import Navbar from "./components/navbar";
 import RequireAuth from "./utils/requireAuth";
 import TicketDetails from "./views/ticketDetails.js";
 import { useSelector } from "react-redux";
+import NotFound from "./components/notFound";
+import LoggedIn from "./utils/loggedIn";
 function App() {
   const myuser = useSelector((state) => state.user);
   return (
@@ -33,8 +35,23 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route
+          path="login"
+          element={
+            <LoggedIn>
+              <Login />
+            </LoggedIn>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <LoggedIn>
+              <Register />
+            </LoggedIn>
+          }
+        />
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>
   );

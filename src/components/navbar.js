@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { logout } from "../api/axios.js";
 import { useNavigate } from "react-router-dom";
-import { Space, Typography } from "antd";
+import { Button, Col, Row, Space, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../redux/userSlice";
+import { UserOutlined } from "@ant-design/icons";
 import Logo from "../images/logo.png";
 
 const { Text } = Typography;
@@ -19,7 +20,7 @@ function Navbar() {
   const dispatch = useDispatch();
 
   //mutation to logout
-  const mutation = useMutation(logout, {
+  const { mutate, isLoading } = useMutation(logout, {
     onSuccess: (response) => {
       // Invalidate and refetch
       queryClient.invalidateQueries("login");
@@ -31,44 +32,58 @@ function Navbar() {
     },
   });
   const handleLogout = () => {
-    mutation.mutate();
+    mutate();
   };
   return (
-    <nav
-      className="menuBar"
+    <Row
+      align="middle"
+      justify="space-between"
       style={{
-        display: "flex",
-        justifyContent: "space-between",
-        paddingLeft: 60,
-        paddingRight: 60,
         paddingTop: 20,
         paddingBottom: 10,
       }}
+      //gutter={{ xs: 0, sm: 0, md: 32, lg: 32 }}
     >
-      <img style={{ width: "80px" }} src={Logo} />
-      <NavLink style={{ padding: "10px", textDecoration: "none" }} to="/">
-        Home
-      </NavLink>
-      {!token && (
-        <NavLink
-          style={{ padding: "10px", textDecoration: "none" }}
-          to="/login"
-        >
-          login
-        </NavLink>
-      )}
-      {token && (
-        <Space>
-          <Text>{myuser.name}</Text>
-          <Text
-            style={{ padding: "10px", cursor: "pointer" }}
-            onClick={handleLogout}
+      <Col span={4}>
+        <img style={{ width: "80px" }} src={Logo} />
+      </Col>
+      <Col style={{ textAlign: "right", paddingRight: "10%" }} span={16}>
+        <Space size="large" style={{ fontSize: "large" }}>
+          <NavLink
+            style={{
+              padding: "10px",
+              textDecoration: "none",
+              color: "#000",
+            }}
+            to="/"
           >
-            Logout
-          </Text>
+            Home
+          </NavLink>
+          <Space size="large">
+            <Space>
+              <UserOutlined />
+              <Text style={{ fontSize: "large", whiteSpace: "nowrap" }}>
+                {myuser.name}
+              </Text>
+            </Space>
+            <Button
+              type="primary"
+              style={{
+                padding: "10px",
+                cursor: "pointer",
+                fontSize: "medium",
+                padding: 5,
+                height: "auto",
+              }}
+              onClick={handleLogout}
+              loading={isLoading}
+            >
+              Logout
+            </Button>
+          </Space>
         </Space>
-      )}
-    </nav>
+      </Col>
+    </Row>
   );
 }
 

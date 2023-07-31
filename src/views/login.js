@@ -42,11 +42,11 @@ function Login() {
 
   return (
     <>
-      <Row justify="center" align="middle" style={{ minHeight: "80vh" }}>
-        <Col xs={24} lg={6}>
+      <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
+        <Col xs={24} md={6}>
           <img src={Logo} />
         </Col>
-        <Col xs={24} lg={8}>
+        <Col xs={24} md={10}>
           <Card>
             <h2>Login</h2>
             <Form
@@ -57,7 +57,7 @@ function Login() {
               }}
               wrapperCol={{
                 span: 16,
-                offset: 4,
+                md: { offset: 4 },
               }}
               initialValues={{
                 remember: true,
@@ -99,8 +99,8 @@ function Login() {
 
               <Form.Item
                 wrapperCol={{
-                  offset: 8,
-                  span: 8,
+                  xs: { span: 8 },
+                  md: { offset: 8, span: 8 },
                 }}
               >
                 <Button type="primary" htmlType="submit" loading={isLoading}>

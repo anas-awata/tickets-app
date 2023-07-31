@@ -7,6 +7,10 @@ import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { ErrorBoundary } from "react-error-boundary";
+import FallBack from "./components/fallBack";
+import LogError from "./components/logError";
+
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -15,7 +19,16 @@ root.render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <App />
+          <ErrorBoundary
+            FallbackComponent={FallBack}
+            onReset={() => {
+              // reset the state of your app here
+            }}
+            resetKeys={["someKey"]}
+            onError={LogError}
+          >
+            <App />
+          </ErrorBoundary>
         </Provider>
       </QueryClientProvider>
     </BrowserRouter>

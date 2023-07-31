@@ -8,9 +8,9 @@ const fontStyle = {
 function TicketInfo({ id, name, service, price }) {
   return (
     <Row justify="center" align="middle">
-      <Col span={12} prefix={12}>
+      <Col xs={20} md={12}>
         <Card
-          title={<h1>{`Ticket #${id}`}</h1>}
+          title={<h1 style={{ textWrap: "wrap" }}>{`Ticket #${id}`}</h1>}
           headStyle={{ background: "#69b1ff", color: "#fff" }}
           style={{}}
           bodyStyle={{}}

@@ -37,6 +37,11 @@ function CreateReportForm({ id }) {
       autoComplete="off"
     >
       <Form.Item
+        wrapperCol={{
+          xs: { span: 12 },
+          md: { span: 16, offset: 4 },
+        }}
+        style={{ padding: 20 }}
         name="Report"
         rules={[
           {
@@ -47,7 +52,7 @@ function CreateReportForm({ id }) {
       >
         <TextArea placeholder="Report discreption" rows={4} />
       </Form.Item>
-      <Form.Item>
+      <Form.Item wrapperCol={{ xm: 24 }}>
         <Button type="primary" htmlType="submit" loading={loading}>
           Add Report
         </Button>

@@ -43,11 +43,11 @@ function Register() {
   };
 
   return (
-    <Row justify="center" align="middle" style={{ minHeight: "80vh" }}>
-      <Col xs={24} lg={6}>
+    <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
+      <Col xs={24} md={6}>
         <img src={Logo} />
       </Col>
-      <Col xs={24} lg={8}>
+      <Col xs={24} md={10}>
         <Card>
           <h2>SignUp</h2>
           <Form
@@ -124,8 +124,8 @@ function Register() {
 
             <Form.Item
               wrapperCol={{
-                offset: 8,
-                span: 8,
+                xs: { span: 8 },
+                md: { offset: 8, span: 8 },
               }}
             >
               {isError && <p>{error}</p>}
