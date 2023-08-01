@@ -4,12 +4,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { ErrorBoundary } from "react-error-boundary";
 import FallBack from "./components/fallBack";
-import LogError from "./components/logError";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +24,6 @@ root.render(
               // reset the state of your app here
             }}
             resetKeys={["someKey"]}
-            onError={LogError}
           >
             <App />
           </ErrorBoundary>

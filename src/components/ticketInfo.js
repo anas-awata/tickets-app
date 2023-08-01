@@ -5,7 +5,7 @@ const fontStyle = {
   fontSize: "x-large",
 };
 
-function TicketInfo({ id, name, service, price }) {
+function TicketInfo({ id, name, service, price, isError, error }) {
   return (
     <Row justify="center" align="middle">
       <Col xs={20} md={12}>
@@ -15,11 +15,18 @@ function TicketInfo({ id, name, service, price }) {
           style={{}}
           bodyStyle={{}}
         >
-          <div>
-            <p style={fontStyle}>Name: {name}</p>
-            <p style={fontStyle}>Service: {service}</p>
-            <p style={fontStyle}>Price: {price}$</p>
-          </div>
+          {!isError && (
+            <div>
+              <p style={fontStyle}>Name: {name}</p>
+              <p style={fontStyle}>Service: {service}</p>
+              <p style={fontStyle}>Price: {price}$</p>
+            </div>
+          )}
+          {isError && (
+            <div>
+              <p>{error.message}</p>
+            </div>
+          )}
         </Card>
       </Col>
     </Row>

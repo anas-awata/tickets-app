@@ -1,3 +1,4 @@
+//404 fallback when navigating to invalid route
 import React from "react";
 import NotFoundSvg from "../images/svgs/notFoundSvg";
 import { Col, Row } from "antd";

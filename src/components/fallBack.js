@@ -1,3 +1,4 @@
+//component to show when there is network error or something wrong
 import React from "react";
 import ErrorSvg from "../images/svgs/errorSvg";
 import { Button, Col, Row } from "antd";

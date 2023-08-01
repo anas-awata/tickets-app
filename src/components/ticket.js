@@ -12,6 +12,7 @@ function Ticket({ id, title, price, status, client }) {
   return (
     <Card
       title={`#${id}`}
+      //only admin can delete tickets
       extra={user_role == "1" && <DeleteTicketBtn id={id} />}
       style={{
         minWidth: "300px",

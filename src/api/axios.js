@@ -16,14 +16,16 @@ export const request = ({ ...options }) => {
   const onError = (error) => {
     if (error.response) {
       // client received an error response (5xx, 4xx)
-      console.log("400", error);
+      console.log(error);
+      throw new Error("An error occurred. Please try again later.");
     } else if (error.request) {
       // client never received a response, or request never left
       console.log(error);
+      throw new Error("Request failed. Please check your internet connection.");
     } else {
       // anything else
-      console.log("else", error);
-      window.location.replace("./login");
+      console.log(error);
+      throw new Error("An error occurred. Please try again later.");
     }
     return error;
   };

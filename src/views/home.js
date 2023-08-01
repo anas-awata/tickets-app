@@ -1,20 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useMutation, useQueryClient, useQuery } from "react-query";
-import {
-  Card,
-  Row,
-  Typography,
-  Button,
-  Form,
-  Input,
-  Radio,
-  Space,
-  Spin,
-  Select,
-  Col,
-} from "antd";
+import React, { useState, useMemo } from "react";
+import { useQuery } from "react-query";
+import { Row, Spin, Col } from "antd";
 import { getTickets } from "../api/axios.js";
-import { useSelector } from "react-redux";
 import Ticket from "../components/ticket.js";
 import CreateTicketsForm from "../components/createTicketsForm.js";
 import NoTickets from "../images/svgs/noTickets.js";
@@ -23,7 +10,6 @@ import FilterSelect from "../components/filterSelect.js";
 import SearchInput from "../components/searchInput.js";
 
 function Home() {
-  const token = useSelector((state) => state.token);
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
 
@@ -33,18 +19,21 @@ function Home() {
     getTickets
   );
 
-  let filteredData = data?.data.data.filter((item) => {
-    if (filter == "all") return data.data.data;
-    return item.status.title.includes(filter);
-  });
+  //filter data
+  //useMemo to not recalculate unless data or filter changed
+  const filteredData = useMemo(() => {
+    if (!data) return null;
+    if (filter === "all") return data.data.data;
+    return data.data.data.filter((item) => item.status.title.includes(filter));
+  }, [data, filter]);
 
-  console.log(filteredData);
-
-  let searchedData = filteredData?.filter((item) => {
-    if (search == "") return filteredData;
-    return item.id.toString().includes(search);
-  });
-  console.log(searchedData);
+  //search in filtered data
+  //useMemo to not recalculate unless filteredData or search changed
+  const searchedData = useMemo(() => {
+    if (!filteredData) return null;
+    if (search === "") return filteredData;
+    return filteredData.filter((item) => item.id.toString().includes(search));
+  }, [filteredData, search]);
 
   return (
     <Row justify="center" align="middle">
@@ -77,28 +66,30 @@ function Home() {
           <Spin size="large" style={{ display: "block", padding: "50px" }} />
         )}
         {isError && (
-          <h2 style={{ display: "block", padding: "50px" }}>{error}</h2>
+          <h2 style={{ display: "block", padding: "50px" }}>{error.message}</h2>
         )}
-        {!isError && (
-          <Space
-            align="center"
-            size="middle"
-            style={{ display: "flex", padding: 100, paddingTop: 10 }}
-            wrap
-          >
+        {!isError && searchedData && searchedData.length > 0 && (
+          <Row justify="center" align={"middle"} gutter={16}>
             {searchedData?.map((ticket) => (
-              <Ticket
+              <Col
                 key={ticket.id}
-                id={ticket.id}
-                title={ticket.service.title}
-                price={ticket.service.price}
-                status={ticket.status.title}
-                client={ticket.client.name}
-              />
+                xs={20}
+                md={10}
+                xl={5}
+                style={{ paddingBottom: 25 }}
+              >
+                <Ticket
+                  id={ticket.id}
+                  title={ticket.service.title}
+                  price={ticket.service.price}
+                  status={ticket.status.title}
+                  client={ticket.client.name}
+                />
+              </Col>
             ))}
-          </Space>
+          </Row>
         )}
-        {searchedData?.length == 0 && (
+        {!isError && searchedData && searchedData.length === 0 && (
           <Row justify="center" align="middle">
             <Col span={16}>
               <NoTickets />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Typography, Row, Button, Card, Form, Input, Col } from "antd";
+import { Typography, Row, Button, Card, Form, Input, Col, message } from "antd";
 import { login } from "../api/axios.js";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ const { Text, Link } = Typography;
 
 function Login() {
   const queryClient = useQueryClient();
+  //message notification
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
   //redux
@@ -40,8 +42,17 @@ function Login() {
     console.log("Failed:", errorInfo);
   };
 
+  if (isError) {
+    messageApi.destroy();
+    messageApi.open({
+      type: "error",
+      content: `${error.message}`,
+    });
+  }
+
   return (
     <>
+      {contextHolder}
       <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
         <Col xs={24} md={6}>
           <img src={Logo} />
