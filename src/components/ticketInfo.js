@@ -5,7 +5,7 @@ const fontStyle = {
   fontSize: "x-large",
 };
 
-function TicketInfo({ id, name, service, price, isError, error }) {
+function TicketInfo({ id, name, service, price, isError, error, isLoading }) {
   return (
     <Row justify="center" align="middle">
       <Col xs={20} md={12}>
@@ -14,6 +14,7 @@ function TicketInfo({ id, name, service, price, isError, error }) {
           headStyle={{ background: "#69b1ff", color: "#fff" }}
           style={{}}
           bodyStyle={{}}
+          loading={isLoading}
         >
           {!isError && (
             <div>

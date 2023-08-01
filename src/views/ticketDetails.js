@@ -24,6 +24,7 @@ function TicketDetails() {
       <Row justify="center" align="middle">
         <Col span={24}>
           <TicketInfo
+            isLoading={isLoading}
             isError={isError}
             error={error}
             name={data?.data[0].client.name}
